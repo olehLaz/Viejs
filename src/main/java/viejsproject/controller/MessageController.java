@@ -49,22 +49,27 @@ public class MessageController {
                 .orElseThrow(NotFoundException::new);
     }
 
+
+    //fetch('/message', {method: 'POST', headers: {'Content-Type' : 'application/json'}, body: JSON.stringify({text:'Five message'})}).then(result => console.log(result))
     @PostMapping
     public Map<String, String> create(@RequestBody Map<String, String> message) {
         message.put("id", String.valueOf(counter++));
         messages.add(message);
         return message;
     }
+
+    //fetch('/message/4', {method: 'PUT', headers: {'Content-Type' : 'application/json'}, body: JSON.stringify({text:'Fourth message(4)', id: 10})}).then(result => console.log(result))
     @PutMapping("{id}")
     public Map<String, String> update(
             @PathVariable String id,
             @RequestBody Map<String, String> message){
-       Map<String, String> messageFromDb = getMessage(message.get("id"));
+       Map<String, String> messageFromDb = getMessage(id);
        messageFromDb.putAll(message);
        messageFromDb.put("id", id);
         return messageFromDb;
     }
 
+    //fetch('/message/4', { method: 'DELETE' }).then(result => console.log(result))
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id) {
         Map<String, String> message = getMessage(id);
