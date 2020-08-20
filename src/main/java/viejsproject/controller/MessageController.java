@@ -59,7 +59,7 @@ public class MessageController {
     public Map<String, String> update(
             @PathVariable String id,
             @RequestBody Map<String, String> message){
-       Map<String, String> messageFromDb = getMessage(message.get("id"));
+       Map<String, String> messageFromDb = getMessage(id);
        messageFromDb.putAll(message);
        messageFromDb.put("id", id);
         return messageFromDb;
